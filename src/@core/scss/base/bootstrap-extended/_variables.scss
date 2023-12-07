@@ -1,12 +1,3 @@
-//  ================================================================================================
-//  File Name: variables.scss
-//  Description: Custom overrides of Bootstrap variables
-//  ----------------------------------------------------------------------------------------------
-//  Item Name: Vuexy - Vuejs, React, Angular, HTML & Laravel Admin Dashboard Template
-//  Author: PIXINVENT
-//  Author URL: http://www.themeforest.net/user/pixinvent
-//  ================================================================================================
-
 // Color system
 
 $white: #fff !default;
@@ -26,9 +17,9 @@ $purple: #7367f0 !default; //$primary
 $green: #28c76f !default; //$success
 $blue: #00cfe8 !default; //$info
 $orange: #ff9f43 !default; //$warning
-$red: #ea5455 !default; //$danger
+$red: #f42534 !default; //$danger
 
-$primary: $purple !default;
+$primary: $red !default;
 $secondary: #82868b !default;
 $info: $blue !default;
 $warning: $orange !default;

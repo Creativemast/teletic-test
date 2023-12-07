@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "vuexy": {
+    "teletic-test": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -34,7 +34,7 @@
               "highlight.js",
               "ng2-flatpickr"
             ],
-            "outputPath": "dist/vuexy",
+            "outputPath": "dist/teletic-test",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -106,22 +106,22 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "vuexy:build"
+            "browserTarget": "teletic-test:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "vuexy:build:production"
+              "browserTarget": "teletic-test:build:production"
             },
             "hmr": {
               "hmr": true,
-              "browserTarget": "vuexy:build:hmr"
+              "browserTarget": "teletic-test:build:hmr"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "vuexy:build"
+            "browserTarget": "teletic-test:build"
           }
         },
         "test": {
@@ -138,7 +138,7 @@
         }
       }
     },
-    "vuexy-e2e": {
+    "teletic-test-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -147,18 +147,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "vuexy:serve"
+            "devServerTarget": "teletic-test:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "vuexy:serve:production"
+              "devServerTarget": "teletic-test:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "vuexy",
+  "defaultProject": "teletic-test",
   "cli": {
     "analytics": false
   }

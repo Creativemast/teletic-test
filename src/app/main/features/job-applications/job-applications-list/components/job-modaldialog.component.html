@@ -1,0 +1,97 @@
+<div class="slideout-content">
+  <!-- Modal to job application starts-->
+  <form class="job modal-content pt-0" [formGroup]="jobForm" (ngSubmit)="onSubmit()">
+    <div class="modal-header mb-1">
+      <h5 class="modal-title" id="exampleModalLabel">{{ mode === 0 ? 'New Job Application' : 'Edit Job Application' }}</h5>
+      <button
+        type="button"
+        class="close"
+        data-dismiss="modal"
+        aria-label="Close"
+        (click)="_activeModal.close()"
+      >
+        ×
+      </button>
+    </div>
+    <div class="modal-body flex-grow-1">
+      <div class="form-group" *ngIf="['Admin', 'Employee'].includes(currentUser.role)">
+        <label for="insert-recruiter" class="form-label">Recruiter <span class="red">*</span></label>
+        <select
+          formControlName="recruiter"
+          class="form-control"
+          aria-describedby="insert-recruiter"
+          tabindex="1"
+          [ngClass]="{ 'is-invalid': submitted && f.recruiter.errors }"
+        >
+          <option *ngFor="let item of recruiters" value="{{item.id}}">{{item.firstName | titlecase}} {{item.lastName | titlecase}}</option>
+        </select>
+        <div *ngIf="submitted && f.recruiter.errors" class="invalid-feedback">
+          <div *ngIf="f.recruiter.errors.required">Recruiter is required</div>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="['Admin', 'Recruiter'].includes(currentUser.role)" >
+        <label for="insert-employee" class="form-label">Employee <span class="red">*</span></label>
+        <select
+          formControlName="employee"
+          class="form-control"
+          aria-describedby="insert-employee"
+          tabindex="2"
+          [ngClass]="{ 'is-invalid': submitted && f.employee.errors }"
+        >
+          <option *ngFor="let item of employees" value="{{item.id}}">{{item.firstName | titlecase}} {{item.lastName | titlecase}}</option>
+        </select>
+        <div *ngIf="submitted && f.employee.errors" class="invalid-feedback">
+          <div *ngIf="f.employee.errors.required">Employee is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="insert-coverLetter" class="form-label">Cover Letter <span class="red">*</span></label>
+        <textarea
+          formControlName="coverLetter"
+          class="form-control"
+          placeholder="Your Cover Letter"
+          aria-describedby="insert-coverLetter"
+          tabindex="3"
+          [rows]="4"
+          autofocus
+          [ngClass]="{ 'is-invalid': submitted && f.coverLetter.errors }"
+        ></textarea>
+        <div *ngIf="submitted && f.coverLetter.errors" class="invalid-feedback">
+          <div *ngIf="f.coverLetter.errors.required">Cover Letter is required</div>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="mode === 1 || (mode === 0 && currentUser.role !== 'Employee')">
+        <label for="insert-status" class="form-label">Status <span class="red">*</span></label>
+        <select
+          formControlName="status"
+          class="form-control"
+          aria-describedby="insert-status"
+          tabindex="4"
+          [ngClass]="{ 'is-invalid': submitted && f.status.errors }"
+          [attr.disabled]="mode === 1 && currentUser?.role === 'Employee' ? true : null"
+        >
+          <option value="Pending">Pending</option>
+          <option value="Active">Active</option>
+          <option value="Treated">Treated</option>
+        </select>
+        <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
+          <div *ngIf="f.status.errors.required">Status is required</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button  type="submit" [disabled]="loading || jobForm.pristine" class="btn btn-primary mr-1" tabindex="5" rippleEffect>
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Save
+        </button>
+        <button
+          type="reset"
+          class="btn btn-outline-secondary"
+          (click)="_activeModal.close()"
+          rippleEffect
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+  <!-- Modal to job application Ends-->
+</div>

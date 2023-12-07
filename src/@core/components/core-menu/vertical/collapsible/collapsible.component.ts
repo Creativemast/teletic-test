@@ -1,12 +1,10 @@
 import { ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-
-import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import { CoreMenuItem } from '@core/types';
 import { CoreMenuService } from '@core/components/core-menu/core-menu.service';
-
+import { Subject } from 'rxjs';
 import { User } from 'app/auth/models';
 
 @Component({

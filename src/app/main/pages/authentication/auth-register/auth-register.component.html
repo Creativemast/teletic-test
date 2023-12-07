@@ -1,0 +1,166 @@
+<div class="auth-wrapper auth-v2">
+  <div class="auth-inner row m-0">
+    <!-- Brand logo--><a class="brand-logo" href="javascript:void(0);">
+      <img src="{{ coreConfig.app.appLogoImage }}" alt="brand-logo" height="28" />
+      <h2 class="brand-text text-primary ml-1">Teletic Test</h2></a
+    >
+    <!-- /Brand logo-->
+    <!-- Left Text-->
+    <div class="d-none d-lg-flex col-lg-8 align-items-center">
+      <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
+        <img
+          class="img-fluid"
+          [src]="
+            coreConfig.layout.skin === 'dark'
+              ? 'assets/images/pages/under-maintenance-dark.svg'
+              : 'assets/images/pages/under-maintenance.svg'
+          "
+          alt="Register V2"
+        />
+      </div>
+    </div>
+    <!-- /Left Text-->
+    <!-- Register-->
+    <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
+      <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
+        <h2 class="card-title font-weight-bold mb-1">Adventure starts here 🚀</h2>
+        <p class="card-text mb-2">Create your account easily and have fun!</p>
+        <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="error">
+          <div class="alert-body">
+            <p>{{ error }}</p>
+          </div>
+        </ngb-alert>
+        <form class="auth-register-form mt-2" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="register-username" class="form-label">Username <span class="red">*</span></label>
+            <input
+              type="text"
+              formControlName="username"
+              class="form-control"
+              placeholder="Your Username"
+              aria-describedby="register-username"
+              tabindex="1"
+              autofocus
+              [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+            />
+            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+              <div *ngIf="f.username.errors.required">Username is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="register-firstName" class="form-label">First Name <span class="red">*</span></label>
+            <input
+              type="text"
+              formControlName="firstName"
+              class="form-control"
+              placeholder="Your First Name"
+              aria-describedby="register-firstName"
+              tabindex="2"
+              [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
+            />
+            <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+              <div *ngIf="f.firstName.errors.required">First Name is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="register-lastName" class="form-label">Last Name <span class="red">*</span></label>
+            <input
+              type="text"
+              formControlName="lastName"
+              class="form-control"
+              placeholder="Your Last Name"
+              aria-describedby="register-lastName"
+              tabindex="3"
+              [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+            />
+            <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+              <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="register-phoneNumber" class="form-label">Phone Number <span class="red">*</span></label>
+            <input
+              type="text"
+              formControlName="phoneNumber"
+              class="form-control"
+              placeholder="Your Phone Number"
+              aria-describedby="register-phoneNumber"
+              tabindex="4"
+              [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }"
+            />
+            <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+              <div *ngIf="f.phoneNumber.errors.required">Phone Number is required</div>
+              <div *ngIf="f.phoneNumber.errors.invalidPhoneNumber">Phone Number must be in this format 0673777613</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="register-role" class="form-label">Role <span class="red">*</span></label>
+            <select
+              formControlName="role"
+              class="form-control"
+              aria-describedby="register-role"
+              tabindex="5"
+              [ngClass]="{ 'is-invalid': submitted && f.role.errors }"
+            >
+              <option value="Employee">Employee</option>
+              <option value="Recruiter">Recruiter</option>
+            </select>
+            <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
+              <div *ngIf="f.role.errors.required">Type is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="register-password" class="form-label">Password <span class="red">*</span></label>
+
+            <div class="input-group input-group-merge form-password-toggle">
+              <input
+                [type]="passwordTextType ? 'text' : 'password'"
+                formControlName="password"
+                class="form-control form-control-merge"
+                placeholder="············"
+                aria-describedby="register-password"
+                tabindex="6"
+                [ngClass]="{ 'is-invalid error': submitted && f.password.errors }"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text cursor-pointer"
+                  ><i
+                    class="feather font-small-4"
+                    [ngClass]="{
+                      'icon-eye-off': passwordTextType,
+                      'icon-eye': !passwordTextType
+                    }"
+                    (click)="togglePasswordTextType()"
+                  ></i
+                ></span>
+              </div>
+            </div>
+            <div
+              *ngIf="submitted && f.password.errors"
+              class="invalid-feedback"
+              [ngClass]="{ 'd-block': submitted && f.password.errors }"
+            >
+              <div *ngIf="f.password.errors.required">Password is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" id="register-privacy-policy" tabindex="7" />
+              <label class="custom-control-label" for="register-privacy-policy">
+                I agree to <a href="javascript:void(0);">privacy policy & terms</a>
+              </label>
+            </div>
+          </div>
+          <button [disabled]="loading" class="btn btn-primary btn-block" tabindex="8" rippleEffect>
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Sign up
+          </button>
+        </form>
+        <p class="text-center mt-2">
+          <span>Already have an account?</span
+          ><a routerLink="/pages/login"><span>&nbsp;Sign in instead</span></a>
+        </p>
+      </div>
+    </div>
+    <!-- /Register-->
+  </div>
+</div>

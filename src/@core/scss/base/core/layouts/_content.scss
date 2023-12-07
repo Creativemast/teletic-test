@@ -1,26 +1,19 @@
-// ================================================================================================
-//     File Name: content.scss
-//     Description: Page content level SCSS for different screen size, layout and device.
-//     ----------------------------------------------------------------------------------------------
-//     Item Name: Vuexy - Vuejs, React, Angular, HTML & Laravel Admin Dashboard Template
-//     Author: PIXINVENT
-//     Authuseror URL: http://www.themeforest.net//pixinvent
-// ================================================================================================
-
 // Contest margin left for expanded & collapsed stats width & margin left
 // ================================================================================================
 @use 'sass:math';
 
 @import '../mixins/main-menu-mixin';
+@import '../../../base/mixins.scss';
 
 html {
   font-size: $base-font-size;
   height: 100%;
-  letter-spacing: 0.01rem;
+  letter-spacing: 0.01rem;    
   body {
     height: 100%;
     background-color: $body-bg;
     direction: $body-direction;
+    @include scrollbars(.2em, #E5E5E5,.5rem, #eff2f5);
     // paragraph line-height
     p {
       line-height: 1.5rem;

@@ -1,18 +1,19 @@
 @import '../bootstrap-extended/include'; // Bootstrap includes
 @import '../components/include'; // Components includes
+@import '../mixins.scss';
 
 $auth-1-inner-max-width: 400px !default;
-
 .auth-wrapper {
   display: flex;
   flex-basis: 100%;
   min-height: 100vh;
   min-height: calc(var(--vh, 1vh) * 100);
   width: 100%;
-
+  
   .auth-inner {
     width: 100%;
     position: relative;
+    @include scrollbars(.2em, #E5E5E5,.5rem, #eff2f5);
   }
 
   &.auth-v1 {

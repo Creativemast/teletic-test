@@ -1,18 +1,20 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { Router } from '@angular/router';
+import { first, takeUntil } from 'rxjs/operators';
+
+import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from 'app/auth/service';
 import { CoreConfigService } from '@core/services/config.service';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-auth-login-v2',
-  templateUrl: './auth-login-v2.component.html',
-  styleUrls: ['./auth-login-v2.component.scss'],
+  selector: 'app-auth-login',
+  templateUrl: './auth-login.component.html',
+  styleUrls: ['./auth-login.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AuthLoginV2Component implements OnInit {
+export class AuthLoginComponent implements OnInit {
   //  Public
   public coreConfig: any;
   public loginForm: FormGroup;
@@ -25,16 +27,12 @@ export class AuthLoginV2Component implements OnInit {
   // Private
   private _unsubscribeAll: Subject<any>;
 
-  /**
-   * Constructor
-   *
-   * @param {CoreConfigService} _coreConfigService
-   */
   constructor(
     private _coreConfigService: CoreConfigService,
     private _formBuilder: FormBuilder,
     private _route: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private _authenticationService: AuthenticationService
   ) {
     this._unsubscribeAll = new Subject();
 
@@ -78,11 +76,18 @@ export class AuthLoginV2Component implements OnInit {
 
     // Login
     this.loading = true;
-
-    // redirect to home page
-    setTimeout(() => {
-      this._router.navigate(['/']);
-    }, 100);
+    this._authenticationService
+      .login(this.f.username.value, this.f.password.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this._router.navigate([this.returnUrl]);
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
+        }
+      );
   }
 
   // Lifecycle Hooks
@@ -93,7 +98,7 @@ export class AuthLoginV2Component implements OnInit {
    */
   ngOnInit(): void {
     this.loginForm = this._formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       password: ['', Validators.required]
     });
 

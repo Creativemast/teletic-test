@@ -1,4 +1,4 @@
-<ng-container *ngIf="!item.hidden">
+<ng-container *ngIf="!item.hidden && (item.role ? item.role.includes(currentUser.role) : true || item.role == undefined)">
   <!-- item with router url -->
   <a
     class="d-flex align-items-center"

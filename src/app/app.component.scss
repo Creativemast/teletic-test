@@ -1,0 +1,7 @@
+@import '../@core/scss/base/mixins.scss';
+
+html {
+    body {
+        @include scrollbars(.2em, #E5E5E5,.5rem, #eff2f5);
+    }
+}

@@ -1,0 +1,100 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- User List -->
+    <section class="users-list-wrapper">
+      <!-- users filter start -->
+      <div class="card">
+        <h5 class="card-header">Search Filter</h5>
+        <div class="card-body">
+          <div class="users-list-filter">
+            <form>
+              <div class="row">
+                <div class="col-12 col-md-4">
+                  <fieldset class="form-group">
+                    <ng-select [items]="selectRole" [(ngModel)]="selectedRole" name="selectedRole" bindLabel="name"
+                      placeholder="Select Role" (change)="filterByRole($event)"></ng-select>
+                  </fieldset>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- users filter end -->
+
+      <div class="card">
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <div class="d-flex justify-content-between align-items-center m-1">
+              <label class="d-flex align-items-center">Show
+                <select class="form-control mx-25" [(ngModel)]="selectedOption">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                entries</label>
+            </div>
+          </div>
+          <div class="col-md-6 col-12 d-flex justify-content-start justify-content-md-end">
+            <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pb-md-0">
+              <label class="d-flex align-items-center ml-1 ml-md-0">Search:<input [(ngModel)]="searchValue"
+                  name="searchValue" type="search" class="form-control ml-25" (keyup)="filterUpdate($event)"
+                  (search)="filterUpdate($event)" /></label>
+              <button class="btn btn-primary ml-1" rippleEffect (click)="toggleAddUser()">
+                <i data-feather="plus" class="d-sm-none d-inline-block mr-0 mr-sm-1"></i><span
+                  class="d-none d-sm-inline-block">Add New User</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <ngx-datatable [rows]="rows" [rowHeight]="50" class="bootstrap core-bootstrap" [limit]="selectedOption"
+          [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="false">
+          <ngx-datatable-column name="User" prop="fullName" [width]="170">
+            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+              <div class="d-flex align-items-center">
+                <img class="rounded-circle mr-1" src="assets/images/portrait/small/{{ row.avatar }}" height="32"
+                  width="32" alt="datatable-avatar" />
+                <div class="cell-line-height">
+                  <a href="javascript:;" class="font-medium-1 d-block"><span
+                      class="font-weight-bold">{{ row.firstName | titlecase }} {{ row.lastName | titlecase }}</span></a>
+                  <span class="text-muted font-small-2"> @{{ row.username }}</span>
+                </div>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Phone Number" prop="phoneNumber" [width]="150"></ngx-datatable-column>
+          <ngx-datatable-column name="Role" prop="role" [width]="100">
+            <ng-template let-role="value" ngx-datatable-cell-template>
+              <div>
+                <i class="feather font-medium-3" [ngClass]="{
+                    'icon-edit-2 text-info': role == 'Employee',
+                    'icon-user text-primary': role == 'Recruiter',
+                    'icon-slack text-danger': role == 'Admin'
+                  }"></i>
+                {{ role | titlecase }}
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Actions" [width]="40" [sortable]="false">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div ngbDropdown container="body">
+                <button ngbDropdownToggle type="button" class="btn icon-btn btn-sm hide-arrow" rippleEffect>
+                  <span [data-feather]="'more-vertical'" [class]="'cursor-pointer'"></span>
+                </button>
+                <div ngbDropdownMenu>
+                  <a href="javascript:;" ngbDropdownItem (click)="toggleEditUser(row)">
+                    <span [data-feather]="'edit'" [size]="16" [class]="'mr-50'"></span> Edit
+                  </a>
+                  <a href="javascript:;" ngbDropdownItem (click)="openConfirmationModal(row)"><span
+                      [data-feather]="'trash'" [size]="16" [class]="'mr-50'"></span> Delete</a>
+                </div>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </section>
+    <!--/ User List -->
+  </div>
+</div>

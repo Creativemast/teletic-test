@@ -1,0 +1,145 @@
+<div class="slideout-content">
+  <!-- Modal to user starts-->
+  <form class="user modal-content pt-0" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="modal-header mb-1">
+      <h5 class="modal-title" id="exampleModalLabel">{{ mode === 0 ? 'New User' : 'Edit User' }}</h5>
+      <button
+        type="button"
+        class="close"
+        data-dismiss="modal"
+        aria-label="Close"
+        (click)="_activeModal.close()"
+      >
+        ×
+      </button>
+    </div>
+    <div class="modal-body flex-grow-1">
+      <div class="form-group">
+        <label for="register-username" class="form-label">Username <span class="red">*</span></label>
+        <input
+          type="text"
+          formControlName="username"
+          class="form-control"
+          placeholder="Your Username"
+          aria-describedby="register-username"
+          tabindex="1"
+          autofocus
+          [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+        />
+        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+          <div *ngIf="f.username.errors.required">Username is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="register-firstName" class="form-label">First Name <span class="red">*</span></label>
+        <input
+          type="text"
+          formControlName="firstName"
+          class="form-control"
+          placeholder="Your First Name"
+          aria-describedby="register-firstName"
+          tabindex="2"
+          [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
+        />
+        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+          <div *ngIf="f.firstName.errors.required">First Name is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="register-lastName" class="form-label">Last Name <span class="red">*</span></label>
+        <input
+          type="text"
+          formControlName="lastName"
+          class="form-control"
+          placeholder="Your Last Name"
+          aria-describedby="register-lastName"
+          tabindex="3"
+          [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+        />
+        <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+          <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="register-phoneNumber" class="form-label">Phone Number <span class="red">*</span></label>
+        <input
+          type="text"
+          formControlName="phoneNumber"
+          class="form-control"
+          placeholder="Your Phone Number"
+          aria-describedby="register-phoneNumber"
+          tabindex="4"
+          [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }"
+        />
+        <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+          <div *ngIf="f.phoneNumber.errors.required">Phone Number is required</div>
+          <div *ngIf="f.phoneNumber.errors.invalidPhoneNumber">Phone Number must be in this format 0673777613</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="register-role" class="form-label">Role <span class="red">*</span></label>
+        <select
+          formControlName="role"
+          class="form-control"
+          aria-describedby="register-role"
+          tabindex="5"
+          [ngClass]="{ 'is-invalid': submitted && f.role.errors }"
+        >
+          <option value="Employee">Employee</option>
+          <option value="Recruiter">Recruiter</option>
+        </select>
+        <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
+          <div *ngIf="f.role.errors.required">Type is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="register-password" class="form-label">Password <span class="red">*</span></label>
+
+        <div class="input-group input-group-merge form-password-toggle">
+          <input
+            [type]="passwordTextType ? 'text' : 'password'"
+            formControlName="password"
+            class="form-control form-control-merge"
+            placeholder="············"
+            aria-describedby="register-password"
+            tabindex="6"
+            [ngClass]="{ 'is-invalid error': submitted && f.password.errors }"
+          />
+          <div class="input-group-append">
+            <span class="input-group-text cursor-pointer"
+              ><i
+                class="feather font-small-4"
+                [ngClass]="{
+                  'icon-eye-off': passwordTextType,
+                  'icon-eye': !passwordTextType
+                }"
+                (click)="togglePasswordTextType()"
+              ></i
+            ></span>
+          </div>
+        </div>
+        <div
+          *ngIf="submitted && f.password.errors"
+          class="invalid-feedback"
+          [ngClass]="{ 'd-block': submitted && f.password.errors }"
+        >
+          <div *ngIf="f.password.errors.required">Password is required</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button  type="submit" [disabled]="loading || userForm.pristine" class="btn btn-primary mr-1" tabindex="8" rippleEffect>
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Save
+        </button>
+        <button
+          type="reset"
+          class="btn btn-outline-secondary"
+          (click)="_activeModal.close()"
+          rippleEffect
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+  <!-- Modal to user Ends-->
+</div>

@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Role, User } from 'app/auth/models';
 
-import { environment } from 'environments/environment';
-import { User, Role } from 'app/auth/models';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -13,7 +13,7 @@ export class AuthenticationService {
   public currentUser: Observable<User>;
 
   //private
-  private currentUserSubject: BehaviorSubject<User>;
+  public currentUserSubject: BehaviorSubject<User>;
 
   /**
    *
@@ -38,47 +38,63 @@ export class AuthenticationService {
   }
 
   /**
-   *  Confirms if user is client
+   *  Confirms if user is recruiter
    */
-  get isClient() {
-    return this.currentUser && this.currentUserSubject.value.role === Role.Client;
+  get isRecruiter() {
+    return this.currentUser && this.currentUserSubject.value.role === Role.Recruiter;
+  }
+
+  /**
+   *  Confirms if user is employee
+   */
+  get isEmployee() {
+    return this.currentUser && this.currentUserSubject.value.role === Role.Employee;
   }
 
   /**
    * User login
    *
-   * @param email
+   * @param username
    * @param password
    * @returns user
    */
-  login(email: string, password: string) {
+  login(username: string, password: string) {
     return this._http
-      .post<any>(`${environment.apiUrl}/users/authenticate`, { email, password })
+      .post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
       .pipe(
         map(user => {
           // login successful if there's a jwt token in the response
           if (user && user.token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user));
+            // notify
+            this.currentUserSubject.next(user);
 
             // Display welcome toast!
             setTimeout(() => {
               this._toastrService.success(
                 'You have successfully logged in as an ' +
-                  user.role +
-                  ' user to Vuexy. Now you can start to explore. Enjoy! 🎉',
-                '👋 Welcome, ' + user.firstName + '!',
+                user.role.toUpperCase() +
+                ' user to Teletic Test. Now you can start to explore. Enjoy! 🎉',
+                '👋 Welcome, ' + user.lastName + '!',
                 { toastClass: 'toast ngx-toastr', closeButton: true }
               );
-            }, 2500);
-
-            // notify
-            this.currentUserSubject.next(user);
+            }, 1000);
           }
 
           return user;
         })
       );
+  }
+
+  /**
+   * User register
+   *
+   * @param user
+   * @returns response
+   */
+  register(user: User) {
+    return this._http.post<any>(`${environment.apiUrl}/users/register`, user)
   }
 
   /**

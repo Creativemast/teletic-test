@@ -1,20 +1,18 @@
-import { Component, OnDestroy, OnInit, HostBinding, HostListener, ViewEncapsulation } from '@angular/core';
-import { MediaObserver } from '@angular/flex-layout';
-
 import * as _ from 'lodash';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
+
+import { Component, HostBinding, HostListener, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { AuthenticationService } from 'app/auth/service';
-import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
 import { CoreConfigService } from '@core/services/config.service';
 import { CoreMediaService } from '@core/services/media.service';
-
-import { User } from 'app/auth/models';
-
-import { coreConfig } from 'app/app-config';
+import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
+import { MediaObserver } from '@angular/flex-layout';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { User } from 'app/auth/models';
+import { coreConfig } from 'app/app-config';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -166,7 +164,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
    */
   logout() {
     this._authenticationService.logout();
-    this._router.navigate(['/pages/authentication/login-v2']);
+    this._router.navigate(['/pages/login']);
   }
 
   // Lifecycle Hooks

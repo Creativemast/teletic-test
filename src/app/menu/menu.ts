@@ -10,11 +10,29 @@ export const menu: CoreMenu[] = [
     url: 'home'
   },
   {
-    id: 'sample',
-    title: 'Sample',
-    translate: 'MENU.SAMPLE',
-    type: 'item',
-    icon: 'file',
-    url: 'sample'
+    id: 'apps',
+    type: 'section',
+    title: 'Features',
+    translate: 'MENU.APPS.SECTION',
+    icon: 'package',
+    children: [
+      {
+        id: 'users',
+        title: 'Users',
+        translate: 'MENU.APPS.USER.LIST',
+        type: 'item',
+        icon: 'user',
+        url: 'features/user/user-list',
+        role: ['Admin']
+      },
+      {
+        id: 'jobApplications',
+        title: 'Job Applications',
+        translate: 'MENU.APPS.JOB_APPLICATIONS.LIST',
+        type: 'item',
+        icon: 'git-pull-request',
+        url: 'features/job-applications/list'
+      }
+    ]
   }
 ]
